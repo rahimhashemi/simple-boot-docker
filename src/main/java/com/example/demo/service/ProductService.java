@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.configuration.ProductLoader;
 import com.example.demo.datamodel.Product;
 import com.example.demo.repository.ProductRepository;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +12,7 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final Logger log = LogManager.getLogger(ProductLoader.class);
+    private final Logger log = LogManager.getLogger(ProductService.class);
 
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
