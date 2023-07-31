@@ -1,4 +1,4 @@
-services:
+#services:
 #  mongodb:
 #    image: 'mongo:latest'
 #    environment:
@@ -17,14 +17,14 @@ services:
 #      - "3306:3306"
 #    volumes:
 #      -./data:/var/lib/mysql
-  postgres:
-    image: postgres:alpine3.18
-    restart: always
-    environment:
-      POSTGRES_USER: example_user
-      POSTGRES_PASSWORD: example_password
-      POSTGRES_DB: example_database
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
+#  postgres:
+#    image: postgres:alpine3.18
+#    restart: always
+#    environment:
+#      POSTGRES_USER: example_user
+#      POSTGRES_PASSWORD: example_password
+#      POSTGRES_DB: example_database
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - ./data:/var/lib/postgresql/data
