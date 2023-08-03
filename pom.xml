@@ -44,6 +44,11 @@
             <artifactId>h2</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,20 +71,20 @@
                         <image>
                             <name>${docker.image.prefix}/${docker.image.name}</name>
                             <build>
-<!--                                <dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>-->
+                                <!--                                <dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>-->
                                 <dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
 
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
                                 <tags>
-<!--                                    <tag>latest</tag>-->
+                                    <!--                                    <tag>latest</tag>-->
                                     <tag>${project.version}</tag>
                                 </tags>
                             </build>
                             <run>
                                 <ports>
-                                    <port>8080:8081</port>
+                                    <port>8080:8080</port>
                                 </ports>
                             </run>
                         </image>
@@ -116,5 +121,23 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
