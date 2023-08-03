@@ -1,5 +1,4 @@
 FROM khipu/openjdk17-alpine:latest
-
 VOLUME /tmp
 ADD maven/${fileName}.jar ${fileName}.jar
 RUN sh -c 'touch /${fileName}.jar'
