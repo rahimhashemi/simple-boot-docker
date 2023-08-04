@@ -7,9 +7,11 @@ docker run --name spring-boot-docker -p 8080:8080
  -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDB:5432/postgres
  -e SPRING_PROFILES_ACTIVE=dev simpath/spring-boot-docker
 ----------------------------------------
-
 # Example MVN Command for CI
 mvn clean package verify docker:push
+-----------------------------
+# build application image
+mvn clean package -e -U docker:build
 
 #start docker compose in background
 docker-compose up -d

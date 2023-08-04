@@ -2,6 +2,8 @@ version: '3'
 
 services:
   postgres:
+    env_file:
+      - variables.env
     hostname: postgresDB
     image: postgres:alpine3.18
     restart: always
@@ -15,6 +17,8 @@ services:
       - ./data:/var/lib/postgresql/data2
 
   spring-boot-docker:
+    env_file:
+      - variables.env
     hostname: spring-boot-docker
     image: simpath/spring-boot-docker
     ports:
@@ -27,7 +31,7 @@ services:
 #      SPRING_DATASOURCE_URL: 'jdbc:postgresql://localhost:5432/postgres'
       SPRING_PROFILES_ACTIVE: 'dev'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       interval: 1m30s
       timeout: 10s
       retries: 3
