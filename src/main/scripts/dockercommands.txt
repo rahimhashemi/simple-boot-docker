@@ -18,3 +18,32 @@ docker-compose up -d
 
 #stop docker-compose
 docker-compose down
+
+## Create portainer service in docker swarm
+docker service create \
+--name portainer \
+--publish 9000:9000 \
+--constraint 'node.role == manager' \
+--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+portainer/portainer \
+-H unix:///var/run/docker.sock
+
+docker run -d -p 9000:9000 --name portainer --restart=always -v portainer_data:/data portainer/portainer -H tcp://host.docker.internal:2375
+
+
+## ssh to node on DigitalOcean
+ssh -i "~/.ssh/<your key here>"  root@<your node ip here>
+
+#Init Docker Swarm
+docker swarm init
+
+## Create portainer service in docker swarm on port 80
+docker service create \
+--name portainer \
+--publish 80:9000 \
+--constraint 'node.role == manager' \
+--mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+portainer/portainer \
+-H unix:///var/run/docker.sock
+
+docker swarm init --force-new-cluster --advertise-addr node3:2377
