@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  postgres:
+    hostname: postgresDB
+    image: postgres:alpine3.18
+    restart: always
+    environment:
+      - POSTGRES_DB=spring
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data2
+    networks:
+      - database_net
+    deploy:
+      replicas: 1
+
+  spring-boot-docker:
+    hostname: spring-boot-docker
+    image: simpath/spring-boot-docker
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgresDB:5432/spring'
+      SPRING_PROFILES_ACTIVE: 'dev'
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - database_net
+    deploy:
+      replicas: 2
+networks:
+  database_net:
+    driver: overlay

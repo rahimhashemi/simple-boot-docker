@@ -24,7 +24,7 @@ public class ProductService {
     }
 
     public void saveProduct(Product product) {
-        log.info("calling save product by : " + product);
-        productRepository.save(product);
+        Product saved = productRepository.save(product);
+        log.info("product saved : " + saved);
     }
 }
