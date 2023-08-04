@@ -1,5 +1,5 @@
 ## Use to run mysql db docker image
-docker run --name postgresDB -p 5432:5432 -e MYSQL_DATABASE=postgres
+docker run --name postgresDB -p 5432:5432 -e POSTGRES_DB=postgres
 -e POSTGRES_PASSWORD=password -d postgres:alpine3.18
 
 docker run --name spring-boot-docker -p 8080:8080
@@ -47,3 +47,17 @@ portainer/portainer \
 -H unix:///var/run/docker.sock
 
 docker swarm init --force-new-cluster --advertise-addr node3:2377
+
+# postgres Service
+docker service create --name postgresDB -p 5432:5432 -e POSTGRES_DB=spring -e POSTGRES_PASSWORD=password postgres:alpine3.18
+
+ # List Processes in service
+docker service ps postgresDB
+
+---------------------------
+
+# With Overlay Network
+docker network create --driver overlay simpath-service-network
+
+docker service create --name postgresDB -p 5432:5432 -e POSTGRES_DB=spring -e POSTGRES_PASSWORD=password --network simpath-service-network postgres:alpine3.18
+docker service create --name spring-boot-docker -p 8080:8080 -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgresDB:5432/spring  -e SPRING_PROFILES_ACTIVE=dev --network simpath-service-network simpath/spring-boot-docker
