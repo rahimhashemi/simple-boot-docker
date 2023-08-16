@@ -23,6 +23,9 @@
         <docker.image.prefix>simpath</docker.image.prefix>
         <docker.image.name>spring-boot-docker</docker.image.name>
         <docker.host.url>http://127.0.0.1:2375</docker.host.url>
+        <sonar.host.url>http://127.0.0.1:9000</sonar.host.url>
+        <sonar.login>admin</sonar.login>
+        <sonar.password>3342119</sonar.password>
     </properties>
 
     <dependencies>
@@ -69,15 +72,12 @@
 
                 <configuration>
                     <dockerHost>${docker.host.url}</dockerHost>
-                    <!--<dockerHost>unix:///var/run/docker.sock</dockerHost>-->
                     <verbose>true</verbose>
                     <images>
                         <image>
                             <name>${docker.image.prefix}/${docker.image.name}</name>
                             <build>
-                                <!--<dockerFileDir>${project.basedir}/src/main/docker/</dockerFileDir>-->
                                 <dockerFileDir>${project.basedir}/target/dockerfile/</dockerFileDir>
-
                                 <assembly>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
@@ -120,6 +120,12 @@
                         <type>pom</type>
                     </dependency>
                 </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.1.2184</version>
             </plugin>
 
         </plugins>
