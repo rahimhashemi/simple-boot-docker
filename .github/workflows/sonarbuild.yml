@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "master" , "sonarqube"]
 
-jobs:
+.jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
