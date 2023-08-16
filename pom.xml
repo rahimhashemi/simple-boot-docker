@@ -23,6 +23,7 @@
         <docker.image.prefix>simpath</docker.image.prefix>
         <docker.image.name>spring-boot-docker</docker.image.name>
         <docker.host.url>http://127.0.0.1:2375</docker.host.url>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
     </properties>
 
     <dependencies>
